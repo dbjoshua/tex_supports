@@ -1,0 +1,798 @@
+\ProvidesFile{lyx-generic.cfg}
+
+% todo ling-packages
+
+\RequirePackage{qtree,stmaryrd}
+\RequirePackage{iftex}
+  \ifXeTeX
+    \RequirePackage{xunicode}
+  \else
+    \RequirePackage{tipa}
+  \fi 
+
+\RequirePackage[normalem]{ulem}
+\RequirePackage{xcolor,graphicx}
+
+% todo generic text formatting 
+% =======================
+% GENERIC TEXT FORMATTING
+% =======================
+
+% CAPITALIZATION
+% ÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂš
+
+% Please follow the instructions in the Generic Style Rule
+
+% ITALICS
+% ÂšÂšÂšÂšÂšÂšÂš
+%:> 'techterm'
+\makeatletter%
+\newcommand*{\techterm@unstarred}[1]{\textit{#1}}
+\newcommand*{\techterm@starred}[1]{``#1''}
+\newcommand*{\techterm}{\@ifstar{\techterm@starred}{\techterm@unstarred}}
+\makeatother% 
+%<:
+\def\olform#1{\textit{#1}}
+\let\ol\olform
+
+\def\phonet#1{{[}#1{]}}
+\let\pht\phonet
+\def\phonol#1{/#1/}
+\let\phl\phonol
+
+\def\lsemph#1{\textit{#1}}
+\let\lem\lsemph
+\let\emph\lsemph\relax
+%\newcommand{\emph}[1]{\textit{#1}}% forces \emph to behave like \textit all the time
+\let\em\itshape% forces \em to behave like \itshape all the time
+
+\def\titre#1{\textit{#1}}
+\def\metalang#1{\textit{#1}}
+
+% SMALL CAPS
+% ÂšÂšÂšÂšÂšÂšÂšÂšÂšÂš
+\def\stress#1{\textsc{\MakeLowercase{#1}}}
+\def\kterm#1{\textsc{\MakeLowercase{#1}}} % important term at its first use (cmd to be modified so as to index such terms)
+\ifdefined\gram
+  \def\gr#1{\gram{\MakeLowercase{#1}}}
+  \else \def\gr#1{\textsc{\MakeLowercase{#1}}}
+  \fi%
+
+% BOLDFACE & OTHER HIGHLIGHTINGS
+% ÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂš
+%:> 'gshl' % command pour la mise en emphase/relief
+\newcommand{\gshl}[2][]{%
+\ifthenelse{\equal{#1}{s}}
+{\underline{#2}}
+{\textbf{#2}}
+}
+%<:
+\let\hl\gshl 
+\let\pem\gshl
+\let\pemph\pem
+\let\highlight\gshl
+
+% QUOTATION MARKS
+% ÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂš
+
+%:> quotrans
+\newcounter{mot}
+\def\maxquotelen{39}
+\def\transpreamble{Nous traduisons:~}
+
+\def\qml{Â« }
+\def\qmr{ Â»}
+
+\begingroup
+\lccode`\~=`\ %
+\lowercase{%
+\gdef\quotrans{\setcounter{mot}{0}%
+\qml\hskip-1em
+\catcode`~=\active
+\def~{\space\stepcounter{mot}}
+}}%
+\endgroup%
+\def\endquotrans{
+\hskip-.7em\qmr
+\stepcounter{mot}
+\ifnum \value{mot}>\maxquotelen
+\PackageError{gl-com-cord-cf}{Citation too long! Use \footqtrans command instead!}{Citation too long! Use \footqtrans command instead!}
+\else\fi
+}
+\begingroup
+\lccode`\~=`\ %
+\lowercase{%
+\gdef\inlinequotation{\setcounter{mot}{0}%
+\qml\hskip-1em
+\catcode`~=\active
+\def~{\space\stepcounter{mot}}
+}}%
+\endgroup%
+\def\endinlinequotation{
+\hskip-.7em\qmr
+\stepcounter{mot}
+\ifnum \value{mot}>\maxquotelen
+\PackageError{gl-com-cord-cf}{Citation too long! Use "quote" environment instead!}{Citation too long! Use "quote" environment instead!}
+\else\fi
+}
+\newcommand{\inlinequote}[1]{\inlinequotation~ #1~ \endinlinequotation}
+\newenvironment{quotetrans}{\quotrans}{\endquotrans}
+\newcommand{\footqtrans}[1]{\footnote{\qml~ #1~ \qmr}}
+\newcommand{\qtrans}[1]{\begin{quotetrans}#1\end{quotetans}}
+%<:
+\def\qell{[$\dots$]}
+\def\qemmark{[emphasis mine]} % use it at the end of a quotation if it contains emphases.
+
+% |  Uncomment the following  
+% v  two lines for english style quotes
+%\renewcommand\qml{``}
+%\renewcommand\qmr{''}
+
+% //Linguistic meaning
+\def\mean#1{`#1'}
+\let\signif\mean
+
+% OTHER PUNCTUATION
+% .................
+
+\newcommand{\letter}[1]{{\LARGE\raisebox{-0.2ex}\guilsinglleft}\hskip-.28ex #1\hskip-.28ex{\LARGE\raisebox{-0.2ex}\guilsinglright}} % curly angle brackets defined to distinguish reference to symbols and semantic types for example.
+
+% ABBREVIATIONS
+% ÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂšÂš
+
+% ! Under construction !
+% ToDo : mecanism to typeset abbreviations
+% Option 1 : gloss
+% Option 2 : leipzig
+% the package should allow having an external database
+% which will be called upon while allowing the list of
+% abreviations not to be printed out.
+% I chose option 1
+% \RequirePackage{gloss}
+% customize "headings" so as to be able to completely hide them
+% remove the dot after the definition in the list of abbreviations
+
+\makeatother
+
+% todo generic numex 
+% =======================
+% GENERIC NUMEX
+% =======================
+
+
+% todo generic_numex
+% ^- ------------- _- 
+% ^/ GENERIC NUMEX _/ 
+% ^- ------------- _- 
+
+% =======================================================
+% = THIS IS FILE	 `generic_numex.tex 				=
+% = FOR		formatting numbered examples accordint	 	=
+% = 		to the	Generic Style Rules for Linguistics	=
+% =======================================================
+
+% ^/ FOR configurations for generic_numex
+% Erasing_ex_Command
+\makeatletter 
+\@ifpackageloaded{covington}{
+% Erasing_ex.and.bx_Cmds
+\renewcommand{\bx}{}
+\renewcommand{\ex}{}
+% End
+% Defining_New_Cmds
+\newcommand{\bgx}{\begin{covexercise}}
+\newcommand{\edx}{\end{covexercise}}
+% End
+}{\relax}
+\@ifpackageloaded{linguex}{
+% Erasing_ex_Cmd
+\renewcommand{\ex}{}
+% End
+}{\relax}
+\@ifpackageloaded{gb4e}{
+% Erasing_ex_Cmd
+\renewcommand{\ex}{}
+% End
+}{\relax}
+\makeatother 
+% End 
+
+\makeatletter
+% Defining_Macro_For_Activation_Of_Chars
+\def\gUmakeletter#1{\catcode`#1=11\relax} 
+%\def\@makeother#1{\catcode`#1=12\relax}
+\def\makeusletter{\gUmakeletter{_}}
+\def\restoreus{\catcode`\_=8}
+\makeusletter
+\let\g_makeletter\gUmakeletter\relax
+\def\g_xs_activate#1{\catcode`#1=\active\relax}
+\let\g_xs_deactivate\g_makeletter\relax
+% End
+\makeatletter
+
+%
+% EXAMPLE
+%
+
+% Defining_Setting_Commands
+\def\g_ex_num_sep{0pt}
+
+% ------------------------------------------------------% 
+%   To let 'lex' know whether it is within a footnote  	%
+%   Copied from 'linguex.sty'						    %
+%														%
+\newif\if@noftnote\@noftnotetrue%						%
+\let\predefinedfootnotetext=\@footnotetext%				%
+\long\def\@footnotetext#1{%								%
+\@noftnotefalse\predefinedfootnotetext{#1}%			%
+\@noftnotetrue}%									%
+% ------------------------------------------------------%
+% DefiningCounters
+% Defining_Conditionals_For_Number_Appearence
+\newif\iflexnumb\lexnumbfalse% 
+% lexno without parenthesis
+\newif\ifsublexnumb\sublexnumbfalse% 
+% sublexno plus lexno without parentheses -- e.g. 1a
+\newif\ifsublexnumo\sublexnumofalse% 
+% sublexno only e.g. a
+% End
+\newcounter{lexno}
+\renewcommand\thelexno{(\arabic{lexno})}
+%\let\thelexno\g_the_lexno%
+\newcounter{fnlexno}
+\renewcommand\thefnlexno{(\roman{fnlexno})}
+% End
+% Defining_lex_Env
+\newenvironment{lex}{
+\begin{enumerate}
+\if@noftnote\refstepcounter{lexno}
+\else\refstepcounter{fnlexno}\fi 
+\addtolength{\labelsep}{\g_ex_num_sep}%
+\setlength{\listparindent}{0pt}%
+\def\makelabel##1{##1\hfil}%       % put labels flushleft in space available
+\if@noftnote\item[(\arabic{lexno})]
+\else\item[(\alph{fnlexno})]
+\fi 
+}{\end{enumerate}}
+% End
+
+
+%
+% SUBEXAMPLE
+%
+
+% DefiningCounters
+\newcounter{sublex}[lexno]
+\renewcommand\thesublex{(\arabic{lexno}\alph{sublex})}
+\newcounter{fnsublex}[fnlexno]
+\renewcommand\thefnsublex{(\roman{fnlexno}\alph{fnsublex})}
+% End
+% Defining_subex_Env
+\newenvironment{subex}{
+\vspace*{-.4em}
+\begin{enumerate}
+\if@noftnote\refstepcounter{sublex}
+\else\refstepcounter{fnsublex}\fi 
+\addtolength{\labelsep}{\g_ex_num_sep}%
+\setlength{\listparindent}{0pt}%
+\def\makelabel##1{##1\hfil}%       % put labels flushleft in space available
+\if@noftnote\item[\alph{sublex}.]
+\else\item[\alph{fnsublex}.]
+\fi 
+}{
+\end{enumerate}
+%\vspace*{-.5em}
+}
+% End
+%:> 'ex'
+% Redefining_ex_Cmd
+\makeatletter%
+\newcommand*{\ex@unstarred}{\begin{lex}}
+\newcommand*{\ex@starred}{\end{lex}}
+\newcommand*{\ex}{\@ifstar{\ex@starred}{\ex@unstarred}}
+\makeatother%
+%<:
+%:> 'ix'
+\makeatletter%
+\newcommand*{\ix@unstarred}{\begin{subex}}
+\newcommand*{\ix@starred}{\end{subex}}
+\newcommand*{\ix}{\@ifstar{\ix@starred}{\ix@unstarred}}
+\makeatother%
+%<: 
+
+%
+% EXAMPLE (with title)
+% 
+\newenvironment{tlex}[1]{\begin{lex}\exhead{#1}}{\end{lex}}
+
+%
+% EXAMPLE (italic font)
+%
+
+%:> 'exi'
+\makeatletter%
+\newcommand*{\exi@unstarred}{\itshape\begin{lex}}
+\newcommand*{\exi@starred}{\end{lex}\normalfont}
+\newcommand*{\exi}{\@ifstar{\exi@starred}{\exi@unstarred}}
+\makeatother%
+\newenvironment{lexi}{\exi}{\exi*}
+%<:
+
+%
+% SUBEXAMPLE (italic font)
+%
+
+%:> 'ixi'
+\makeatletter%
+\newcommand*{\ixi@unstarred}{\itshape\begin{subex}}
+\newcommand*{\ixi@starred}{\end{subex}\normalfont}
+\newcommand*{\ixi}{\@ifstar{\ixi@starred}{\ixi@unstarred}}
+\newenvironment{subexi}{\ixi}{\ixi*}
+\makeatother%
+%<: 
+
+
+%
+% LOW LEVEL COMMANDS FOR NUMBERED EXAMPLES
+%
+
+%:> 'langinfo' : cs for typesetting language informations
+\def\langinfofn#1{\textup{#1}}
+\newcommand{\langinfo}[2][]{\ifthenelse{\equal{#1}{}}{\langinfofn{#2}}{\langinfofn{#2 $($#1$)$}}}
+\newcommand{\jlanginfo}[2][]{
+\ifthenelse{\equal{#1}{}}{\jl{#2}\def\endlex{\printlanguage\end{enumerate}}}{\jl{#2, #1}}\def\endlex{\printlanguage\end{enumerate}}
+}%<:    
+%:> 'exhead'
+\makeatletter
+\let\boldface\textbf
+\let\gras\textbf
+\let\italiques\textit
+\let\italics\textit
+\newcommand{\exheadfn}[1]{\gras{\textup{#1}}}
+\newcommand*{\exhead@unstarred}[1]{\exheadfn{#1}\\}
+\newcommand*{\exhead@starred}[1]{\exheadfn{#1}}
+\newcommand*{\exhead}{\@ifstar{\exhead@starred}{\exhead@unstarred}}
+\makeatother 
+%<:
+
+%
+% LOW LEVEL COMMANDS FOR GLOSSED EXAMPLES
+%
+
+% Renaming_Commands_From_cgloss.sty
+
+% ---------------------------------------------------
+% - The file cgloss.sty was copied and modified 	-
+% - from the Glossalatex template bundle 			-
+% - to match instructions in the 					-
+% - Generic Style Rule for Linguitics				-
+% - By AkpouÃ© KouamÃ© JosuÃ© 							-
+% - (professional gmail addr)						-
+% ---------------------------------------------------
+
+%%%
+%%% Sentences with word-by-word glosses
+%%%
+
+\let\g_gl_single=1
+\def\singlegloss{\let\g_gl_single=1}
+\def\nosinglegloss{\let\g_gl_single=0}
+\def\@selfnt{\selectfont}
+
+
+\def\g_ex_language{}
+\newcommand{\jl}[1]{% Language info into jambox
+\def\g_ex_language{#1}
+}
+\def\printlanguage{
+\ifthenelse{\equal{\g_ex_language}{}}
+{}{\hfill(\g_ex_language)\hspace*{-1cm}}}
+
+
+\def\g_gl_lines_single%                  % Introduces 2-line text-and-gloss.
+{\begingroup\bgroup %\begin{flushleft}
+\ifx\g_gl_single1%           conditionally force single spacing (hpk/MC)
+\def\baselinestretch{1}\selectfont\fi
+%        \vskip\baselineskip\def\baselinestretch{1}%
+%        \@selfnt\vskip-\baselineskip\fi%
+\bgroup
+\g_gl_twosent
+}
+
+\def\g_gl_lines_double%                  % Introduces 3-line text-and-gloss.
+{\begingroup\bgroup %\begin{flushleft}
+\ifx\g_gl_single1%        conditionally force single spacing (hpk/MC)
+\def\baselinestretch{1}\selectfont\fi
+%        \vskip\baselineskip\def\baselinestretch{1}%
+%        \@selfnt\vskip-\baselineskip\fi%
+\bgroup
+\g_gl_threesent
+}
+
+% \def\glt{\vskip.0\baselineskip}
+
+% redefine \gltoffset to set off translation from ex and gloss
+\def\gltoffset{0pt}
+
+\def\g_gl_tr{\ifhmode\\*[\gltoffset]\else\nobreak\vskip\gltoffset\nobreak\fi}
+
+
+% Introduces a translation
+\let\trans\g_gl_tr%
+
+\def\gln{\relax}
+\def\glend{} % obsolete
+% Ends the gloss environment.
+
+\newbox\g_gl_line_one % boxes with words from first line
+\newbox\g_gl_line_two
+\newbox\g_gl_line_three
+\newbox\g_gl_word_one % a word from the first line (hbox)
+\newbox\g_gl_word_two
+\newbox\g_gl_word_three
+\newbox\g_gl_line % the constructed double line (hbox)
+\newskip\g_gl_glue % extra glue between glossed pairs or triples
+\g_gl_glue = 0pt plus 2pt minus 1pt % allow stretch/shrink between words
+%\g_gl_glue = 5pt plus 2pt minus 1pt % allow stretch/shrink between words
+\newif\ifnotdone
+
+\def\g_gl_word_one_each{\g_gl_fn_family\itshape} 
+\def\g_gl_word_two_each{\g_gl_fn_family\normalfont} 
+\def\g_gl_word_three_each{\g_gl_fn_family\normalfont} 
+\let\eachwordone=\g_gl_word_one_each
+\let\eachwordtwo=\g_gl_word_two_each
+\let\eachwordthree=\g_gl_word_three_each
+
+\def\g_gl_word_last#1#2#3% #1 = \each, #2 = line box, #3 = word box
+{\setbox#2=\vbox{\unvbox#2%
+\global\setbox#3=\lastbox
+}%
+\ifvoid#3\global\setbox#3=\hbox{#1\strut{} }\fi
+% extra space following \strut in case #1 needs a space
+}
+
+\def\testdone
+{\ifdim\ht\g_gl_line_one=0pt
+\ifdim\ht\g_gl_line_two=0pt \notdonefalse % tricky space after pt
+\else\notdonetrue
+\fi
+\else\notdonetrue
+\fi
+}
+
+\gdef\g_gl_words_get(#1,#2)#3 #4\\% #1=linebox, #2=\each, #3=1st word, #4=remainder
+{\setbox#1=\vbox{\hbox{#2\strut#3 }% adds space
+\unvbox#1%
+}%
+\def\more{#4}%
+\ifx\more\empty\let\more=\g_gl_words_done
+\else\let\more=\g_gl_words_get
+\fi
+\more(#1,#2)#4\\%
+}
+
+\gdef\g_gl_words_done(#1,#2)\\{}%
+
+\gdef\g_gl_twosent#1\\ #2\\{% #1 = first line, #2 = second line
+\g_gl_words_get(\g_gl_line_one,\eachwordone)#1 \\%
+\g_gl_words_get(\g_gl_line_two,\eachwordtwo)#2 \\%
+\loop\g_gl_word_last{\eachwordone}{\g_gl_line_one}{\g_gl_word_one}%
+\g_gl_word_last{\eachwordtwo}{\g_gl_line_two}{\g_gl_word_two}%
+\global\setbox\g_gl_line=\hbox{\unhbox\g_gl_line
+\hskip\g_gl_glue
+\vtop{\box\g_gl_word_one   % vtop was vbox
+\nointerlineskip
+\box\g_gl_word_two
+}%
+}%
+\testdone
+\ifnotdone
+\repeat
+\egroup % matches \bgroup in \gloss
+\g_gl_stop\endgroup\printlanguage}
+
+\gdef\g_gl_threesent#1\\ #2\\ #3\\{% #1 = first line, #2 = second line, #3 = third
+\g_gl_words_get(\g_gl_line_one,\eachwordone)#1 \\%
+\g_gl_words_get(\g_gl_line_two,\eachwordtwo)#2 \\%
+\g_gl_words_get(\g_gl_line_three,\eachwordthree)#3 \\%
+\loop\g_gl_word_last{\eachwordone}{\g_gl_line_one}{\g_gl_word_one}%
+\g_gl_word_last{\eachwordtwo}{\g_gl_line_two}{\g_gl_word_two}%
+\g_gl_word_last{\eachwordthree}{\g_gl_line_three}{\g_gl_word_three}%
+\global\setbox\g_gl_line=\hbox{\unhbox\g_gl_line
+\hskip\g_gl_glue
+\vtop{\box\g_gl_word_one   % vtop was vbox
+\nointerlineskip
+\box\g_gl_word_two
+\nointerlineskip
+\box\g_gl_word_three
+}%
+}%
+\testdone
+\ifnotdone
+\repeat
+\egroup % matches \bgroup in \gloss
+\g_gl_stop\endgroup\printlanguage}
+
+%\def\g_gl_stop{{\hskip -\g_gl_glue}\unhbox\g_gl_line\end{flushleft}}
+
+% \leavevmode puts us back in horizontal mode, so that a \\ will work
+\def\g_gl_stop{{\hskip -\g_gl_glue}\unhbox\g_gl_line\leavevmode \egroup}
+% End modificatioons
+
+% Defining_New_Commands
+
+% DefiningGeneralCommands
+\def\g_gl_fn_family{}
+\def\selectglossfont#1{\renewcommand\g_gl_fn_family{#1}}
+\def\setmonogloss{
+\def\g_gl_word_one_each{\g_gl_fn_family\normalfont} 
+\def\g_gl_word_two_each{\g_gl_fn_family\normalfont}
+} 
+\def\setbigloss{
+\def\g_gl_word_one_each{\g_gl_fn_family\itshape} 
+\def\g_gl_word_two_each{\g_gl_fn_family\normalfont} 
+}
+\def\setigloss{
+\def\g_gl_word_one_each{\g_gl_fn_family\itshape} 
+\def\g_gl_word_two_each{\g_gl_fn_family\normalfont} 
+\def\ot{\ctsep\g_gl_lines_single {\printgramjug}}
+}
+
+%:> 'printgramjug'
+\def\@gramjug{}
+\newcommand{\gj}[1]{
+\def\@gramjug{#1}
+}
+\def\printgramjug{\ifthenelse{\equal{\@gramjug}{}}{}{\@gramjug~}}
+%<:
+% End
+% Defining_Low-level_Commands
+%Line_Spacing
+\def\ctsep{\vspace*{0em}}
+\def\ftsep{}
+%End
+%:> 'ct' : cs for typesetting context of a piece of data
+\def\ctname{Context:}% allows customization of the name
+\def\ctnamefn#1{#1}% allows customization of the font
+\def\ct{\ctnamefn{\ctname}~}
+%<:
+\newcommand\ot{\def\mb{{\textcolor{white}{\printgramjug}}}\ctsep\g_gl_lines_double {\printgramjug}}%
+\newcommand\mb{\ctsep\g_gl_lines_single {\printgramjug}}
+\newcommand\gl{\textcolor{white}{\printgramjug}}%
+\newcommand\ft{\g_gl_tr \textcolor{white}{\printgramjug}}
+\def\lt#1{(Lit.~`#1')}
+%:> 'ta' : cs for typesetting response task of a piece of data
+\def\taname{Task:}% allows customization of the name
+\def\tanamefn#1{#1}% allows customization of the font
+\def\ta{\tanamefn{\taname}~}
+%<:
+%:> 're' : cs for typesetting speaker's response to the response task
+\def\rename{Response:}% allows customization of the name
+\def\renamefn#1{#1}% allows customization of the font
+\def\re{\renamefn{\rename}~}
+%<:
+\def\id#1{(#1)}
+% End
+
+%
+% INTERLINEAR 
+%
+
+\newenvironment{interlinear}[1][2]%
+{%	
+\ifthenelse{\equal{#1}{2}}{\setmonogloss}{
+\ifthenelse{\equal{#1}{3}}{\setbigloss}{
+\ifthenelse{\equal{#1}{i}}{\setigloss}{\setmonogloss\typeout{'lingdiss error' : There are only three options for this argument -- i.e. 2=digloss ; 3=trigloss ; i=digloss with \glosslineone in \itshape}}}}
+}{}
+
+
+%
+% DATA (interlinear with built in lex env.)
+%
+
+\newenvironment{data}[1][2]
+{
+\begin{lex}	\ifthenelse{\equal{#1}{2}}{\setmonogloss}{
+\ifthenelse{\equal{#1}{3}}{\setbigloss}{
+\ifthenelse{\equal{#1}{i}}{\setigloss}{\setmonogloss\typeout{'lingdiss error' : There are only three options for this argument -- i.e. 2=digloss ; 3=trigloss ; i=digloss with \glosslineone in \itshape}}}}
+}{\end{lex}}
+
+%
+% REF COMMANDS
+%
+
+\newcommand{\rnext}[2][1]{\addtocounter{lexno}{#1}(\arabic{lexno}#2)\addtocounter{lexno}{-#1}}
+\newcommand{\rlast}[2][1]{\addtocounter{lexno}{-#1}(\arabic{lexno}#2)\addtocounter{lexno}{#1}}
+
+\newcommand{\Next}[1][]{\rnext[1]{#1}}
+\newcommand{\NNext}[1][]{\rnext[2]{#1}}
+\newcommand{\Last}[1][]{\rlast[0]{#1}}
+\newcommand{\LLast}[1][]{\rlast[1]{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%  Added formats of examples: %
+%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% \lx {sentence}               (num. ex.)
+% \lx[jdg]{sentence}         (num. ex. with judg.)
+% 
+% \lx {                                 (num. ex.)
+%		\ax {sentence}         (num. subex.) 
+%		\ax {sentence}         (num. subex.) 
+%	} 
+% \lx[jdg] {                          (num. ex.)
+%		\ax[jdg]{sentence}   (num. subex. with judg.) 
+%		\ax[jdg]{sentence}   (num. subex. with judg.) 
+%	} 
+% \gex {                                 (num. gl. ex.)
+%		\ct <context/scenario>\\ % option
+%		\mb <sentence>\\
+%		\gl <glosses>\\
+%		\ft <translation>
+%		\lt <litteral translation> % option 
+%	} 
+% \gex[jdg] {                          (num. gl. ex. with judg.)
+%		%\ct <context/scenario>\\ % option
+%		\mb <sentence>\\
+%		\gl <glosses>\\
+%		\ft <translation>
+%		\lt <litteral translation> % option 
+%	} 
+% 
+% \lex {                                 (num. ex.)
+%		\gix  {                        (num. gl. subex.)
+%		\ct <context/scenario>\\ % option
+%		\mb <sentence>\\
+%		\gl <glosses>\\
+%		\ft <translation>
+%		\lt <litteral translation> % option 
+%	} 
+%		\gix  {                          (num. gl. subex.)
+%		\ct <context/scenario>\\ % option
+%		\mb <sentence>\\
+%		\gl <glosses>\\
+%		\ft <translation>
+%		\lt <litteral translation> % option 
+%	} 
+%	} 
+% \lx {                          (num. ex. with judg.)
+%		\gix[jdg] {                    (num. gl. subex. with judg.)
+%		\ct <context/scenario>\\ % option
+%		\mb <sentence>\\
+%		\gl <glosses>\\
+%		\ft <translation>
+%		\lt <litteral translation> % option 
+%		} 
+%		\gix[jdg] {                      (num. gl. subex. with judg.)
+%		\ct <context/scenario>\\ % option
+%		\mb <sentence>\\
+%		\gl <glosses>\\
+%		\ft <translation>
+%		\lt <litteral translation> % option 
+%		} 
+%} 
+% \gex is a variant of \gx
+% 
+%%%%%%%%%%%%%%%%%%%%%%%
+
+% €€€€€€€€€€€€€€€€€€€€€€€€€
+% €€                                             €€
+% €€    DEFINING MACROS      €€
+% €€                                             €€
+% €€€€€€€€€€€€€€€€€€€€€€€€€
+
+ \providecommand{\lx}[2][]{\ex #1 #2  \ex*} 
+  \providecommand{\gx}[2][]{
+  \begin {data} \gj{#1} #2\end{data}} 
+  \let\gex\gx\relax
+ 
+  \newcommand{\ax}[2][]{\ix #1 #2\ix* }
+\newcommand{\gix}[2][]{\ix\begin{interlinear}\gj{#1} #2\end{interlinear}\ix*} 
+
+
+% End
+\restoreus
+\makeatother 
+
+% todo LINGTHM
+
+\makeatletter%
+\@ifpackageloaded{ifthenx}{}{\RequirePackage{ifthenx}}
+\newcommand{\defltcounter}[1]{\newcounter{lt#1no}\setcounter{lt#1no}{0}}
+%\def\ltlabel{Generalization}
+\def\ltlabelfn#1{\textbf{#1}}
+\def\ltnostyle#1{\arabic{#1}}
+\def\lttitlefn#1{{\normalfont #1}}
+\def\lttitlelp{(}
+\def\lttitlerp{)}
+\def\ltheadsep{\\}
+
+
+\newcommand{\newlingthm}[2]{
+\refstepcounter{lt#1no}
+\ltlabelfn{#2~\ltnostyle{lt#1no}}
+}
+
+%DÃ©finition	ldefin
+\defltcounter{defin}
+\newenvironment{ldefin}[1][]{\begin{lex} 
+\newlingthm{defin}{Definition}
+\ifthenelse{\equal{#1}{}}{}{\lttitlelp\lttitlefn{#1}\lttitlerp}
+\ltheadsep}
+{\end{lex}\relax}
+
+%Conjecture	lconjec
+\defltcounter{conjec}
+\newenvironment{lconjec}[1][]{\begin{lex} 
+\newlingthm{conjec}{Conjecture}
+\ifthenelse{\equal{#1}{}}{}{\lttitlelp\lttitlefn{#1}\lttitlerp}
+\ltheadsep}
+{\end{lex}\relax}
+
+%Test
+\defltcounter{diag}
+\newenvironment{ldiag}[1][]{\begin{lex} 
+\newlingthm{diag}{Test diagnostique}
+\ifthenelse{\equal{#1}{}}{}{\lttitlelp\lttitlefn{#1}\lttitlerp}
+\ltheadsep}
+{\end{lex}\relax}
+
+%Notation
+\defltcounter{notat}
+\newenvironment{lnotat}[1][]{\begin{lex} 
+\newlingthm{notat}{Notation}
+\ifthenelse{\equal{#1}{}}{}{\lttitlelp\lttitlefn{#1}\lttitlerp}
+\ltheadsep}
+{\end{lex}\relax}
+%ThÃ©orÃšme
+\defltcounter{thm}
+\newenvironment{lthm}[1][]{\begin{lex} 
+\newlingthm{thm}{ThÃ©orÃšme}
+\ifthenelse{\equal{#1}{}}{}{\lttitlelp\lttitlefn{#1}\lttitlerp}
+\ltheadsep}
+{\end{lex}\relax}
+
+%Lemme
+\defltcounter{lem}
+\newenvironment{llem}[1][]{\begin{lex} 
+\newlingthm{lem}{Lemme}
+\ifthenelse{\equal{#1}{}}{}{\lttitlelp\lttitlefn{#1}\lttitlerp}
+\ltheadsep}
+{\end{lex}\relax}
+
+%InfÃ©rence	linfer
+\defltcounter{infer}
+\newenvironment{linfer}[1][]{\begin{lex} 
+\newlingthm{infer}{Inf\'erence}
+\ifthenelse{\equal{#1}{}}{}{\lttitlelp\lttitlefn{#1}\lttitlerp}
+\ltheadsep}
+{\end{lex}\relax}
+
+% todo traits
+\newcommand{\traitanot}[1]{\\ \matricev{#1}}
+\def\vmfeature#1{\mbox{\textsc{\MakeLowercase{#1}}}\\}
+\newcommand\hmfeature[2][,]{\mbox{\textsc{\MakeLowercase{#2}}}#1~}
+\def\tfeature#1{\textsc{\MakeLowercase{#1}}}
+\def\matriceh#1{\mbox{{[}\textsc{\MakeLowercase{#1}}{]}}}
+\newcommand{\matricev}[1]{
+\let\trait\vmfeature\relax
+\mbox{%
+$
+\left[\hspace*{-2.9pt}%
+\begin{array}{l}
+#1
+\end{array}
+\hspace*{-2.9pt}\right]
+$}
+\let\trait\tfeature\relax
+}
+\newenvironment{fmatrix}
+{\let\trait\mfeature\relax
+  $\left[\hspace*{-2.9pt}\begin{array}{l}}
+{\end{array}\hspace*{-2.9pt}\right]$
+ \let\trait\tfeature\relax}
+
+\let\trait\tfeature
+\newcommand{\sofeat}[1]{\textsubscript{\textsc{\MakeUppercase{#1}}}}
+
+% todo semantix
