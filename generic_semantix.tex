@@ -1,0 +1,304 @@
+
+% //General
+%:> 'den'
+\makeatletter%
+%\@ifpackageloaded{stmaryrd}{}{\RequirePackage{stmaryrd}}
+\def\dbox#1{\ensuremath{#1}}
+\newcommand*{\den@unstarred}[1]{$\llbracket\mbox{#1}\rrbracket$}
+\newcommand*{\den@starred}[2][g]{$\llbracket\mbox{#2}\rrbracket^{\dbox{#1}}$}
+\newcommand*{\den}{\@ifstar{\den@starred}{\den@unstarred}}
+\makeatother%
+%<:
+%:> 'bigden'
+\newcommand*{\bigden}[2][]{\mbox{%
+		$
+		\left\llbracket%
+		\begin{array}{l}
+			\mbox{\hspace*{-2.9pt}#2\hspace*{-2.9pt}}
+		\end{array}
+		\right\rrbracket^{#1}
+		$}
+}
+%<:
+\let\wff\ensuremath\relax % introduces math formulaes
+\let\ms\wff\relax % syn. \wff 
+\let\fml\wff % syn. \wff 
+
+% //Set theory
+% ///set notations
+%:> 'set'
+\makeatletter%
+\newcommand*{\set@unstarred}[1]{\{#1\}}
+\newcommand*{\set@starred}[2]{\{$#1$ : #2\}}
+\newcommand*{\set}{\@ifstar{\set@starred}{\set@unstarred}}
+\makeatother% 
+%<:
+%:> 'upl' : for uplets/ordered sets
+\makeatletter%
+\def\upl@unstarred#1{$\langle$#1$\rangle$}
+\def\upl@starred#1{\langle\mbox{#1}\rangle}
+\def\upl{\@ifstar{\upl@starred}{\upl@unstarred}}
+\makeatother% 
+%<:
+
+% ///empty set
+%:> 'vide'
+\makeatletter%
+\def\vide@unstarred{$\emptyset$}
+\def\vide@starred{\emptyset}
+\def\vide{\@ifstar{\vide@starred}{\vide@unstarred}}
+\makeatother%
+%<:
+\let\null\vide
+
+% ///relations
+%:> 'inclus'
+\makeatletter%
+\def\inclus@unstarred{$\subseteq$}
+\def\inclus@starred{$\subset$}
+\def\inclus{\@ifstar{\inclus@starred}{\inclus@unstarred}}
+\makeatother%
+%<:
+%:> 'ninclus'
+\makeatletter%
+\def\ninclus@unstarred{$\not\subseteq$}
+\def\ninclus@starred{$\not\subset$}
+\def\ninclus{\@ifstar{\ninclus@starred}{\ninclus@unstarred}}
+\makeatother%
+%<:
+%:> 'inclut'
+\makeatletter%
+\def\inclut@unstarred{$\supseteq$}
+\def\inclut@starred{$\supset$}
+\def\inclut{\@ifstar{\inclut@starred}{\inclut@unstarred}}
+\makeatother%
+%<:
+%:> 'ninclut'
+\makeatletter%
+\def\ninclut@unstarred{$\not\supseteq$}
+\def\ninclut@starred{$\not\supset$}
+\def\ninclut{\@ifstar{\ninclut@starred}{\ninclut@unstarred}}
+\makeatother%
+%<:
+
+% ///operators
+%:> 'inter'
+\makeatletter%
+\def\inter@unstarred{$\cap$}
+\def\inter@starred#1#2{#1 $\cap$ #2}
+\def\inter{\@ifstar{\inter@starred}{\inter@unstarred}}
+\makeatother
+%<:
+%:> 'union'
+\makeatletter%
+\def\union@unstarred{$\cup$}
+\def\union@starred#1#2{#1 $\cup$ #2}
+\def\union{\@ifstar{\union@starred}{\union@unstarred}}
+\makeatother
+%<:
+
+\makeatletter%
+%:> 'Union'
+\def\Union@unstarred[#1]#2{$\stackrel[#1]{#2}{\bigcup}$}
+\def\Union@starred[#1]#2#3{$\stackrel[#1]{#2}{\bigcup}$#3}
+\def\Union{\@ifstar{\Union@starred}{\Union@unstarred}}
+%<:
+%:> 'Inter'
+\def\Inter@unstarred[#1]#2{$\stackrel[#1]{#2}{\bigcup}$}
+\def\Inter@starred[#1]#2#3{$\stackrel[#1]{#2}{\bigcup}$#3}
+\def\Inter{\@ifstar{\Inter@starred}{\Inter@unstarred}}
+%<:
+%:> 'dif'
+\def\dif@unstarred{$-$}
+\def\dif@starred#1#2{#1 $-$ #2}
+\def\dif{\@ifstar{\dif@starred}{\dif@unstarred}}
+%<:
+\let\moins\dif % fr syn.
+\let\minus\dif % en syn.
+%:> 'croix'
+\def\croix@unstarred{$\times$}
+\def\croix@starred#1#2{#1 $\times$ #2}
+\def\croix{\@ifstar{\croix@starred}{\croix@unstarred}}
+%<:
+\let\fois\croix\relax
+
+\makeatother%
+
+% //Functions & lambda-notation
+% ///functions
+%:> 'Fnc'
+\makeatletter%
+\newcommand*{\Fnc@unstarred}[5][f]{
+	$\begin{array}{llllc}
+		#1 & : & #2 & \rightarrow & \mbox{#3}\\
+		&  & #4 & \mapsto & \mbox{#5}
+	\end{array}$
+}
+\newcommand*{\Fnc@starred}[3][f]{$#1:#2 \mapsto \mbox{#3}$} % for presupposition specify the function's domain via  \dom 
+\newcommand*{\Fnc}{\@ifstar{\Fnc@starred}{\Fnc@unstarred}}
+\makeatother%
+%<:
+%:> 'fnc' 
+\makeatletter%
+\newcommand*{\fnc@unstarred}[3][f]{$#1(#2) = \mbox{#3}$}
+\newcommand*{\fnc@starred}[2][f]{$#1(#2)$}
+\newcommand*{\fnc}{\@ifstar{\fnc@starred}{\fnc@unstarred}}
+\makeatother%
+%<:
+
+%///λ-notation
+%:> 'lam' 
+\makeatletter%
+\newcommand*{\lam@unstarred}[1]{$\lambda #1.$}
+\newcommand*{\lam@starred}[2]{$\lambda #1: \mbox{#2}.$}
+\newcommand*{\lam}{\@ifstar{\lam@starred}{\lam@unstarred}}
+\makeatother%
+%<:
+
+% ///function domain
+%:> 'dom' 
+\makeatletter%
+\newcommand*{\dom@unstarred}[1]{~$\in D_{#1}$}
+\newcommand*{\dom@starred}[1]{$D_{#1}$}
+\newcommand*{\dom}{\@ifstar{\dom@starred}{\dom@unstarred}}
+\makeatother%
+%<:
+%:> 'typ' 
+\makeatletter%
+\newcommand*{\typ@unstarred}[1]{\langle#1\rangle}
+\newcommand*{\typ@starred}[2]{_{\langle#1\rangle}}
+\newcommand*{\typ}{\@ifstar{\typ@starred}{\typ@unstarred}}
+\makeatother%
+%<:
+%:> 'ttyp'
+\newcommand{\ttyp}[1]{$\langle#1\rangle$}
+%<:
+% //Predicate Logic
+% ///Variables
+%:> 'var'
+\makeatletter%
+\newcommand*{\var@unstarred}[1]{$(#1)$}
+\newcommand*{\var@starred}[1]{$#1$}
+\newcommand*{\var}{\@ifstar{\var@starred}{\var@unstarred}}
+\makeatother%
+%<:
+
+% ///Connectors
+%:> 'non'
+\makeatletter%
+\newcommand*{\non@unstarred}{$\neg$}
+\newcommand*{\non@starred}[1]{$\neg$#1}
+\newcommand*{\non}{\@ifstar{\non@starred}{\non@unstarred}}
+\makeatother%
+%<:
+%:> 'et'
+\makeatletter%
+\newcommand*{\et@unstarred}{$\wedge$}
+\newcommand*{\et@starred}[2]{#1 $\wedge$ #2}
+\newcommand*{\et}{\@ifstar{\et@starred}{\et@unstarred}}
+\makeatother%
+%<:
+%:> 'Et'
+\makeatletter%
+\def\Et@unstarred[#1]#2{$\stackrel[#1]{#2}{\bigwedge}$}
+\def\Et@starred[#1]#2#3{$\stackrel[#1]{#2}{\bigwedge}$#3}
+\def\Et{\@ifstar{\Et@starred}{\Et@unstarred}}
+\makeatother%
+%<:
+\let\And\Et\relax
+%:> 'ou'
+\makeatletter%
+\newcommand*{\ou@unstarred}{$\vee$}
+\newcommand*{\ou@starred}[2]{#1 $\vee$ #2}
+\newcommand*{\ou}{\@ifstar{\ou@starred}{\ou@unstarred}}
+\makeatother%
+%<:
+%:> 'Ou'
+\makeatletter%
+\def\Ou@unstarred[#1]#2{$\stackrel[#1]{#2}{\bigvee}$}
+\def\Ou@starred[#1]#2#3{$\stackrel[#1]{#2}{\bigvee}$#3}
+\def\Ou{\@ifstar{\Ou@starred}{\Ou@unstarred}}
+\makeatother%
+%<:
+\let\Or\Ou\relax
+%:> 'alors'
+\makeatletter%
+\newcommand*{\alors@unstarred}{$\rightarrow$}
+\newcommand*{\alors@starred}[2]{#1 $\rightarrow$ #2}
+\newcommand*{\alors}{\@ifstar{\alors@starred}{\alors@unstarred}}
+\makeatother%
+%<:
+\let\then\alors\relax
+%:> 'ssi'
+\makeatletter%
+\newcommand*{\ssi@unstarred}{$\leftrightarrow$}
+\newcommand*{\ssi@starred}[2]{#1 $\leftrightarrow$ #2}
+\newcommand*{\ssi}{\@ifstar{\ssi@starred}{\ssi@unstarred}}
+\makeatother%
+%<:
+
+% ///Quantifiers
+%:> 'all'
+\def\all#1{$\forall #1$}
+%<:
+%:> 'All'
+\makeatletter%
+\newcommand*{\fall@unstarred}[2][x]{$\forall #1$ #2$(#1)$}
+\newcommand*{\fall@starred}[3][x]{$\forall #1 (\mbox{#2}(#1) \rightarrow \mbox{#3}(#1))$}
+\newcommand*{\fall}{\@ifstar{\fall@starred}{\fall@unstarred}}
+\makeatother% 
+%<:
+%:> 'no'
+\def\no#1{$\neg\exists #1$}
+%<:
+%:> 'No'
+\makeatletter%
+\newcommand*{\No@unstarred}[2][x]{$\neg\exists #1$ #2$(#1)$}
+\newcommand*{\No@starred}[3][x]{$\neg\exists #1 (\mbox{#2}(#1) \&\ \mbox{#3}(#1))$}
+\newcommand*{\No}{\@ifstar{\No@starred}{\No@unstarred}}
+\makeatother% 
+%<:
+%:> 'exis'
+\def\exis#1{$\exists #1$}
+%<:
+%:> 'Exis'
+\makeatletter%
+\newcommand*{\Exis@unstarred}[2][x]{$\exists #1$ #2$(#1)$}
+\newcommand*{\Exis@starred}[3][x]{$\exists #1 (\mbox{#2}(#1) \&\ \mbox{#3}(#1))$}
+\newcommand*{\Exis}{\@ifstar{\Exis@starred}{\Exis@unstarred}}
+\makeatother% 
+%<:
+
+% //Mereology
+\def\mas{$\oplus$} % plus in Spanish
+\let\som\mas % fr syn of \mas
+
+% //Composition rules
+%:> 'FA'
+\makeatletter%
+\newcommand*{\FA@unstarred}[2]{\den{#1}(\den{#2})}
+\newcommand*{\FA@starred}[3][g]{\den*[#1]{#2}(\den*[#1]{#3})}
+\newcommand*{\FA}{\@ifstar{\FA@starred}{\FA@unstarred}}
+\makeatother% 
+%<:
+%:> 'PM'
+\makeatletter%
+\newcommand*{\PM@unstarred}[2]{\lam x\den{#1} $=$ \den{#2} $= 1$}
+\newcommand*{\PM@starred}[3][g]{\lam x\den*[#1]{#2}$(x)$ $=$ \den*[#1]{#3}$(x)$ $= 1$}
+\newcommand*{\PM}{\@ifstar{\PM@starred}{\PM@unstarred}}
+\makeatother% 
+%<:
+
+% //Misc
+%:> 'by'
+\newcommand{\by}[2][0]{\hfill (by #2)\hspace*{#1em}}
+%<:
+%:> 'by...'
+\newcommand{\byfa}{\by{Functional Application}}
+\newcommand{\bypm}{\by{Predicate Modification}}
+\newcommand{\byhcr}{\by{Hamblin's Composition Rule}}
+\newcommand{\bylconv}{\by{$\lambda$-conversion}}
+%<:
+%End
+
+\endinput%
