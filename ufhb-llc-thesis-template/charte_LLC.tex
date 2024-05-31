@@ -1,0 +1,539 @@
+%!TeX program=xelatex
+
+% ^file-info_metadata="These file informations were written using WRIML
+% (visit github.com/dbjoshua/WRILM-presentation for more informations about this language)."
+%   ^about-this
+%     This is an (unofficial) LaTeX template for writing master and doctoral dissertations
+%     at the Department of Linguistics (from Félix Houphouët-Boigny University)
+%     according to the style sheet of the UFR Langues, Littératures et Civilisations.
+%   _about-this
+%
+%   ^license
+%     This template is distributed under the license CC-BY-SA 4.0
+%   _license
+%
+%   ^copyright-owner
+%     Akpoué Kouamé Josué
+%   _copyright-owner
+%
+%   ^NOTE
+%     This template requires the following fontfaces:
+%       ^* Linguistics Pro _*
+%       ^* Junicode _*
+%       ^* Bookman Old Style _*
+%     Make sure to have them install on your PC. Normally the first two are
+%     available on the net.
+%   _NOTE
+% _file-info
+
+\documentclass[12pt,oneside]{scrbook}[2015/10/03]
+
+\usepackage[french]{babel}
+
+\usepackage{blindtext}
+% FOR SETTING FONTS
+\usepackage{fontspec}
+ \setmainfont[Scale=MatchLowercase,Ligatures=TeX]{Linguistics Pro}
+ \setsansfont[Scale=MatchLowercase,Ligatures=TeX]{Junicode}
+ \newfontfamily\bookman[Scale=MatchLowercase,Ligatures=TeX]{Bookman Old Style}
+ \newfontfamily{\olfont}[Scale=MatchLowercase,Ligatures=TeX]{Linguistics Pro}
+ %
+ % Font Sizes
+ \def\bodytextsize{\fontsize{13pt}{13pt}\selectfont}
+ \let\normalsize\bodytextsize%
+ \newcommand{\myfontsize}[1]{\fontsize{#1}{#1}\selectfont}
+ \def\titlesize{\fontsize{20pt}{20pt}\selectfont}
+ \def\partsize{\myfontsize{18pt}}
+ \def\chaptersize{\myfontsize{16pt}}
+ \def\sectionsize{\myfontsize{14pt}}
+ \def\subsectionsize{\myfontsize{12pt}}
+ \def\quotesize{\myfontsize{10pt}}
+ \def\dedicationsize{\myfontsize{10pt}} 
+% END  
+% FOR PAGE LAYOUT
+\usepackage[left=3cm, right=2.50cm, top=2.50cm, bottom=2.50cm]{geometry}
+% END
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+\usepackage[explicit]{titlesec}
+\titleformat{\chapter}[block]
+	{\bfseries\chaptersize\filcenter\sffamily}
+	{\chaptersize\thechapter}
+	{.5em}
+	{\MakeUppercase{#1}}[\normalsize\vspace*{3em}]
+
+
+\makeatletter
+ \makeatletter 
+ \renewcommand{\section}{\@startsection{section}{1}{\z@}
+ 	{-4ex \@plus -1ex \@minus -.4ex}
+ 	{1ex \@plus.2ex }
+ 	{\normalfont\sectionsize\sffamily\bfseries\MakeUppercase}}
+ 
+ \renewcommand{\subsection}{\@startsection{subsection}{2}{\z@}
+ 	{-3ex \@plus -0.1ex \@minus -.4ex}
+ 	{0.5ex \@plus.2ex }
+ 	{\normalfont\normalsize\sffamily\MakeUppercase}}
+ 
+ \renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{\z@}
+ 	{-2ex \@plus -0.1ex \@minus -.2ex}
+ 	{.2ex \@plus.2ex }
+ 	{\normalfont\normalsize\sffamily\bfseries}}        
+ 
+ \renewcommand{\paragraph}{\@startsection{paragraph}{4}{\z@}
+ 	{-2ex \@plus -0.1ex \@minus -.2ex}
+ 	{.2ex \@plus.2ex }
+ 	{\normalfont\normalsize\sffamily\itshape}}        
+ 
+ \renewcommand{\subparagraph}{\@startsection{subparagraph}{5}{\z@}
+ 	{-2ex \@plus -0.1ex \@minus -.2ex}
+ 	{.2ex \@plus.2ex }
+ 	{\normalfont\normalsize\sffamily}}        
+ 
+ \makeatother 
+\makeatother 
+%\renewcommand\thesection{\arabic{section}}
+
+% CITATION
+\makeatletter%
+\newcommand*{\citation@unstarred}[1]{« #1 »}
+	\newcommand*{\citation@starred}[1]{
+		\begin{mdframed}[innerleftmargin=2cm,
+			innerrightmargin=2cm,
+			align=center,
+			topline=false,
+			bottomline=false,
+			leftline=false,
+			rightline=false]\linespread{1}\quotesize
+			#1
+		\end{mdframed}
+		\linespread{1.5}\normalsize
+	}
+\newcommand*{\lcitation}{\@ifstar{\citation@starred}{\citation@unstarred}}
+\makeatother%
+% END 
+
+\usepackage{xcolor}
+
+\usepackage[framemethod=TikZ]{mdframed}
+
+
+\author{Akpoué Josué}
+\title{Test scrbook}
+\begin{document}
+	\def\covcol{blue!11!white}
+	\begin{titlepage}
+		\fontsize{13pt}{13pt}\selectfont
+		\pagecolor{\covcol}
+		\centering
+		\vspace*{1em}
+		[logo]\\
+		\vspace*{.5em}
+		UFR LANGUES, LITTERATURES ET CIVILISATIONS\\
+		\textit{DEPARTEMENT DES SCIENCES DU LANGAGE}\par
+		\vfil
+			\def\boxsep{.7pt}
+		\begin{mdframed}[linewidth=.7pt,%
+			roundcorner=18pt,innerbottommargin=\boxsep,innerleftmargin=\boxsep,innerrightmargin=\boxsep,innertopmargin=\boxsep,backgroundcolor=\covcol]
+			\begin{mdframed}[linewidth=3.4pt,%
+				roundcorner=17pt,innerbottommargin=\boxsep,innerleftmargin=\boxsep,innerrightmargin=\boxsep,innertopmargin=\boxsep,backgroundcolor=\covcol]
+				\renewcommand\boxsep{2.5em}
+				\begin{mdframed}[linewidth=.7pt,%
+					roundcorner=16pt,innerbottommargin=\boxsep,innertopmargin=\boxsep,innerleftmargin=\boxsep,innerrightmargin=\boxsep,backgroundcolor=\covcol]
+					\begin{center}
+						{\LARGE
+						\sffamily 
+						\itshape
+						TEMPS, ASPECT ET MODALITE DANS LES LANGUES KWA}
+					\end{center}
+				\end{mdframed}
+			\end{mdframed}
+		\end{mdframed}
+		\vspace*{2em}
+		Thèse de doctorat présentée en vue de l’obtention du grade de  Docteur en Sciences du Langage, 
+		option Linguistique Descriptive et Documentation des Langues
+		\vfil 
+		\textbf{Soutenue par :}\hfill\textbf{Sous la direction de :}\par
+		Akpoué Kouamé Josué\hfill Yapo Bogny Joseph (Professeur Titulaire)\par 
+		\vfil
+		%%
+		\textbf{Membres du Jury}\par\vspace*{1em}
+		%% 
+		Prénom NOM (titre) (\textit{Président du jury})\par 
+		Prénom NOM (titre) (\textit{Rapporteur})\par 
+		Prénom NOM (titre) (\textit{Membre})\par 
+		Prénom NOM (titre) (\textit{Membre})
+		\vfil
+		Soutenue publiquement le 12 décembre 2021
+		\vfil 
+		\textcopyright~Akpoué Kouamé Josué, 2021
+	\end{titlepage}\pagecolor{white}
+	\mainmatter
+	\pagestyle{empty}
+	% MANDATORY BLANC PAGE
+	\vfil
+	\begin{center}
+		\textcolor{white}{-- Page intensionnellement laissée blanche --}
+	\end{center}
+	\vfil
+	% END
+
+	% COLOPHON PAGE
+	\newpage
+	\vfil 
+	\begin{center}
+		Copy of the title page
+	\end{center}
+	\vfil 
+	% END 
+	% DEDICATION PAGE
+	\newpage
+	\vspace*{6cm}
+	\begin{flushright}
+		% \quotesize 
+		{\bookman\quotesize\`A mon P\`ere}
+	\end{flushright}
+	% END 
+	% REMERCIEMENTS
+	\linespread{1.5}
+	\newpage\normalsize
+	\blindtext
+	\linespread{1}
+	% END
+	
+	\fontsize{12pt}{18pt}\selectfont
+	\addtocontents{toc}{\protect\thispagestyle{empty}}
+	\tableofcontents
+		
+	\pagestyle{headings}
+	\linespread{1.5}
+	\normalsize
+	\chapter{Titre de chapitre}
+	\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}
+	\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}
+	\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}
+	\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}
+	\chapter{Titre de chapitre}
+	\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}
+	\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}
+	\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}
+	\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}
+	\chapter{Titre de chapitre}
+	\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}
+	\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}
+	\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}
+	\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}
+	\chapter{Titre de chapitre}
+	\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}
+	\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}
+	\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}
+	\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}\section{Titre de section}
+	\subsection{title}
+	\subsubsection{title}
+	\paragraph{title}	
+	\blindtext
+	\textbf{texte en gras}
+	\blindtext
+	TEXTE EN CAPITALES \textsc{texte en petites captitales}
+	\blindtext
+	\textit{texte en italiques}
+	
+	\appendix
+	\chapter*{Annexes}
+	\addcontentsline{toc}{chapter}{Annexes}
+	\renewcommand{\thesection}{\arabic{section}}
+	\section{Questionnaire}
+	\section{Données du Baoulé}
+	\section{Données du MOdZukru}
+	\chapter*{Indexs}
+	\addcontentsline{toc}{chapter}{Indexs}
+	\section*{Index des auteurs}
+	\addcontentsline{toc}{section}{Index des noms}
+	\section*{Index des langues}
+	\addcontentsline{toc}{section}{Index des langues}
+	\section*{Index thématique}
+	\addcontentsline{toc}{section}{Index thématique}
+	\chapter*{Bibliographie}
+	\addcontentsline{toc}{chapter}{Bibliographie}
+		
+\end{document}
